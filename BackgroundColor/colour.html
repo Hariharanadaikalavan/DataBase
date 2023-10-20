@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+   <link rel="stylesheet" href="./color.css">
+</head>
+<body>
+    <div class="border border-3" id="changecolor">
+    <h1><center>Color Picker</center></h1>
+    <div class="button justify-content-center">
+        
+            <input type="button" value="#eoeoeo" id="firstbutton" class=" btn1 bg-info" onclick="btn1()">      
+            <input type="button" value="#6fcff97" id="secondbutton" class="btn2 bg-success" onclick="btn2()">
+            <input type="button" value="#56ccf2" id="thridbutton" class="btn3 bg-primary" onclick="btn3()">
+            <input type=button value="#bb6bd9" id="fourbutton" class="btn4 bg-danger" onclick="btn4()">
+    </div>
+    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-4 border border-5 bg-dark text-white w-50">
+        <h3>background Color:<span id="box1"></span></h3>
+    </div>
+</div>
+    <p><center>Try Clicking on one of the colors above to change the background color off this page!!</p></center>
+
+    <script src="./color.js"></script>
+</div>
+</body>
+</html>
