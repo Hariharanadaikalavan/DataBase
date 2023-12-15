@@ -1,0 +1,82 @@
+-- 1) Create the tables
+CREATE TABLE student_profile (
+    rollno INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    dob DATE NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE marks (
+    rollno INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    mark1 INT NOT NULL,
+    mark2 INT NOT NULL
+);
+
+-- 2) Insert 5 different records
+INSERT INTO student_profile VALUES
+(1, 'John Doe', '1990-05-15', 'Computer Science', 'New York'),
+(2, 'Jane Smith', '1992-08-22', 'Electrical Engineering', 'San Francisco'),
+(3, 'Alice Johnson', '1991-03-10', 'Mechanical Engineering', 'Los Angeles'),
+(4, 'Bob Williams', '1993-11-05', 'Civil Engineering', 'Chicago'),
+(5, 'Eva Davis', '1994-06-18', 'Chemical Engineering', 'Houston');
+
+INSERT INTO marks VALUES
+(1, 'John Doe', 85, 90),
+(2, 'Jane Smith', 78, 88),
+(3, 'Alice Johnson', 92, 87),
+(4, 'Bob Williams', 65, 72),
+(5, 'Eva Davis', 75, 80);
+
+-- 3) Add a column 'total' to marks table
+ALTER TABLE marks
+ADD COLUMN total INT;
+
+-- 4) Change the column name 'dob' to 'dateofbirth' in student_profile table
+ALTER TABLE student_profile
+CHANGE COLUMN dob dateofbirth DATE NOT NULL;
+
+-- 5) Display the structure of the tables
+DESCRIBE student_profile;
+DESCRIBE marks;
+
+-- 6) List the tables
+SHOW TABLES;
+
+-- 7) Calculate total marks for each student and update in marks table
+UPDATE marks
+SET total = mark1 + mark2;
+
+-- 8) Remove the 4th rollno from student_profile table
+DELETE FROM student_profile WHERE rollno = 4;
+
+-- 9) Display all records
+SELECT * FROM student_profile;
+SELECT * FROM marks;
+
+-- 10) Save your changes. Changes in MySQL are automatically saved when you execute the SQL statements.
+
+-- 11) Add two more columns, 'average' and 'grade', to marks table
+ALTER TABLE marks
+ADD COLUMN average DECIMAL(5,2),
+ADD COLUMN grade VARCHAR(10);
+
+-- 12) Calculate the average for all students and update the 'average' column
+UPDATE marks
+SET average = (mark1 + mark2) / 2;
+
+-- 13) Calculate the grade
+UPDATE marks
+SET grade = CASE WHEN mark1 > 40 AND mark2 > 40 THEN 'pass' ELSE 'fail' END;
+
+-- 14) Remove the column 'average'
+ALTER TABLE marks
+DROP COLUMN average;
+
+-- 15) Remove all records from both tables
+DELETE FROM student_profile;
+DELETE FROM marks;
+
+-- 16) Confirm your changes. Changes are confirmed when you execute the SQL statements successfully.
+Pl
