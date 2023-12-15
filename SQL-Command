@@ -1,1 +1,268 @@
+Microsoft Windows [Version 10.0.19043.2130]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Hariharan>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create table student_profile(
+    -> rollno int,
+    -> name varchar(20),
+    -> dob,
+    -> department varchar(15),
+    -> city varchar(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+department varchar(15),
+city varchar(20)
+)' at line 4
+mysql> CREATE TABLE student_profile (
+    ->     rollno INT PRIMARY KEY,
+    ->     name VARCHAR(255) NOT NULL,
+    ->     dob DATE NOT NULL,
+    ->     department VARCHAR(255) NOT NULL,
+    ->     city VARCHAR(255) NOT NULL
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> create database student
+    -> create database student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create database student' at line 2
+mysql> CREATE DATABASE your_database_name;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use your_database-name;
+ERROR 1049 (42000): Unknown database 'your_database-name'
+mysql> USE your_database_name;
+Database changed
+mysql> CREATE TABLE student_profile (
+    ->     rollno INT PRIMARY KEY,
+    ->     name VARCHAR(255) NOT NULL,
+    ->     dob DATE NOT NULL,
+    ->     department VARCHAR(255) NOT NULL,
+    ->     city VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table marks(
+    -> rollno int,
+    -> name varchar(20),
+    -> mark int,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> CREATE TABLE marks (
+    ->     rollno INT PRIMARY KEY,
+    ->     name VARCHAR(255) NOT NULL,
+    ->     mark1 INT NOT NULL,
+    ->     mark2 INT NOT NULL,
+    ->     FOREIGN KEY (rollno) REFERENCES student_profile(rollno)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc your_database_name;
+ERROR 1146 (42S02): Table 'your_database_name.your_database_name' doesn't exist
+mysql> INSERT INTO student_profile(rollno,name,dob,department,city)VALUES
+    -> (1,'hariharan','16-11-2000','mechanical','coimbatore'),
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> INSERT INTO student_profile (rollno, name, dob, department, city)
+    -> VALUES
+    -> (1, 'John Doe', '1990-05-15', 'Computer Science', 'New York'),
+    -> (2, 'Jane Smith', '1992-08-22', 'Electrical Engineering', 'San Francisco'),
+    -> (3, 'Alice Johnson', '1991-03-10', 'Mechanical Engineering', 'Los Angeles'),
+    -> (4, 'Bob Williams', '1993-11-05', 'Civil Engineering', 'Chicago'),
+    -> (4, 'Bob Williams', '1993-11-05', 'Civil Engineering', 'Chicago'),
+    -> (5, 'Eva Davis', '1994-06-18', 'Chemical Engineering', 'Houston');
+ERROR 1062 (23000): Duplicate entry '4' for key 'student_profile.PRIMARY'
+mysql> (1, 'John Doe', '1990-05-15', 'Computer Science', 'New York'),
+    -> (2, 'Jane Smith', '1992-08-22', 'Electrical Engineering', 'San Francisco'),
+    -> (3, 'Alice Johnson', '1991-03-10', 'Mechanical Engineering', 'Los Angeles'),
+    -> (4, 'Bob Williams', '1993-11-05', 'Civil Engineering', 'Chicago'),
+    -> (5, 'Eva Davis', '1994-06-18', 'Chemical Engineering', 'Houston');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1, 'John Doe', '1990-05-15', 'Computer Science', 'New York'),
+(2, 'Jane Smith', ' at line 1
+mysql> INSERT INTO student_profile (rollno, name, dob, department, city)
+    -> VALUES
+    -> (1, 'John Doe', '1990-05-15', 'Computer Science', 'New York'),
+    -> (2, 'Jane Smith', '1992-08-22', 'Electrical Engineering', 'San Francisco'),
+    -> (3, 'Alice Johnson', '1991-03-10', 'Mechanical Engineering', 'Los Angeles'),
+    -> (4, 'Bob Williams', '1993-11-05', 'Civil Engineering', 'Chicago'),
+    -> (5, 'Eva Davis', '1994-06-18', 'Chemical Engineering', 'Houston');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table marks
+    -> add column total int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student_profile
+    -> change column dob dataofbirth
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> ALTER TABLE student_profile
+    -> CHANGE COLUMN dob dateofbirth DATE NOT NULL;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Display the structure of student_profile table
+mysql> DESCRIBE student_profile;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| rollno      | int          | NO   | PRI | NULL    |       |
+| name        | varchar(255) | NO   |     | NULL    |       |
+| dateofbirth | date         | NO   |     | NULL    |       |
+| department  | varchar(255) | NO   |     | NULL    |       |
+| city        | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql>
+mysql> -- Display the structure of marks table
+mysql> DESCRIBE marks;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| rollno | int          | NO   | PRI | NULL    |       |
+| name   | varchar(255) | NO   |     | NULL    |       |
+| mark1  | int          | NO   |     | NULL    |       |
+| mark2  | int          | NO   |     | NULL    |       |
+| total  | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------------------+
+| Tables_in_your_database_name |
++------------------------------+
+| marks                        |
+| student_profile              |
++------------------------------+
+2 rows in set (0.01 sec)
+
+mysql> select *from student_profile
+    -> ;
++--------+---------------+-------------+------------------------+---------------+
+| rollno | name          | dateofbirth | department             | city          |
++--------+---------------+-------------+------------------------+---------------+
+|      1 | John Doe      | 1990-05-15  | Computer Science       | New York      |
+|      2 | Jane Smith    | 1992-08-22  | Electrical Engineering | San Francisco |
+|      3 | Alice Johnson | 1991-03-10  | Mechanical Engineering | Los Angeles   |
+|      4 | Bob Williams  | 1993-11-05  | Civil Engineering      | Chicago       |
+|      5 | Eva Davis     | 1994-06-18  | Chemical Engineering   | Houston       |
++--------+---------------+-------------+------------------------+---------------+
+5 rows in set (0.01 sec)
+
+mysql> select *from marks
+    -> ;
+Empty set (0.00 sec)
+
+mysql> DESCRIBE marks;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| rollno | int          | NO   | PRI | NULL    |       |
+| name   | varchar(255) | NO   |     | NULL    |       |
+| mark1  | int          | NO   |     | NULL    |       |
+| mark2  | int          | NO   |     | NULL    |       |
+| total  | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> -- Update total marks for each student in marks table
+mysql> UPDATE marks
+    -> SET total = mark1 + mark2;
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> -- Remove the 4th rollno from student_profile table
+mysql> DELETE FROM student_profile
+    -> WHERE rollno = 4;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> -- Display all records from student_profile table
+mysql> SELECT * FROM student_profile;
++--------+---------------+-------------+------------------------+---------------+
+| rollno | name          | dateofbirth | department             | city          |
++--------+---------------+-------------+------------------------+---------------+
+|      1 | John Doe      | 1990-05-15  | Computer Science       | New York      |
+|      2 | Jane Smith    | 1992-08-22  | Electrical Engineering | San Francisco |
+|      3 | Alice Johnson | 1991-03-10  | Mechanical Engineering | Los Angeles   |
+|      5 | Eva Davis     | 1994-06-18  | Chemical Engineering   | Houston       |
++--------+---------------+-------------+------------------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> -- Display all records from marks table
+mysql> SELECT * FROM marks;
+Empty set (0.00 sec)
+
+mysql> -- Add columns 'average' and 'grade' to marks table
+mysql> ALTER TABLE marks
+    -> ADD COLUMN average DECIMAL(5,2),
+    -> ADD COLUMN grade VARCHAR(10);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Update average for all students in marks table
+mysql> UPDATE marks
+    -> SET average = (mark1 + mark2) / 2;
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> -- Update grade based on marks in marks table
+mysql> UPDATE marks
+    -> SET grade = CASE WHEN mark1 > 40 AND mark2 > 40 THEN 'pass' ELSE 'fail' END;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> -- Remove the 'average' column from marks table
+mysql> ALTER TABLE marks
+    -> DROP COLUMN average;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Remove all records from student_profile table
+mysql> DELETE FROM student_profile;
+Query OK, 4 rows affected (0.02 sec)
+
+mysql>
+mysql> -- Remove all records from marks table
+mysql> DELETE FROM marks;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM student_profile;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM marks;
+Empty set (0.00 sec)
+
+mysql>
+
+
+
 
