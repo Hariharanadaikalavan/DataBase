@@ -1,0 +1,433 @@
+Microsoft Windows [Version 10.0.19043.2130]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Hariharan>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+9 rows in set (0.04 sec)
+
+mysql> create databases paybills;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databases paybills' at line 1
+mysql> create database paybills;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| paybills           |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use paybills
+Database changed
+mysql> create table bills(
+    -> billno primary key auto_increment,
+    -> billdate date default (current_date),
+    -> productname varchar(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key auto_increment,
+billdate date default (current_date),
+productname va' at line 2
+mysql> create table bills(
+    -> billno primary key auto_increment,
+    -> billdate date default (current_date),
+    -> productname varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key auto_increment,
+billdate date default (current_date),
+productname va' at line 2
+mysql> create table bills(
+    -> billno int primary key auto_increment,
+    -> billdate date default (current_date),
+    -> productname varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc table bills
+    -> ;
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | bills | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | NULL  |
++----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.04 sec)
+
+mysql> select * from paybills
+    -> ;
+ERROR 1146 (42S02): Table 'paybills.paybills' doesn't exist
+mysql> select * from bills;
+Empty set (0.00 sec)
+
+mysql> insert into bills value('mouse');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into bills productname values('mouse');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'productname values('mouse')' at line 1
+mysql> insert into bills productname values('mouse');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'productname values('mouse')' at line 1
+mysql> insert into bills (productname) values('mouse');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from bills
+    -> ;
++--------+------------+-------------+
+| billno | billdate   | productname |
++--------+------------+-------------+
+|      1 | 2023-12-21 | mouse       |
++--------+------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> insert into bills (productname) values ('keyboard');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from bills;
++--------+------------+-------------+
+| billno | billdate   | productname |
++--------+------------+-------------+
+|      1 | 2023-12-21 | mouse       |
+|      2 | 2023-12-21 | keyboard    |
++--------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> desc bills;
++-------------+-------------+------+-----+-----------+-------------------+
+| Field       | Type        | Null | Key | Default   | Extra             |
++-------------+-------------+------+-----+-----------+-------------------+
+| billno      | int         | NO   | PRI | NULL      | auto_increment    |
+| billdate    | date        | YES  |     | curdate() | DEFAULT_GENERATED |
+| productname | varchar(20) | YES  |     | NULL      |                   |
++-------------+-------------+------+-----+-----------+-------------------+
+3 rows in set (0.02 sec)
+
+mysql> desc paybills;
+ERROR 1146 (42S02): Table 'paybills.paybills' doesn't exist
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| paybills           |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> select * bills
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'bills' at line 1
+mysql> select * from bills;
++--------+------------+-------------+
+| billno | billdate   | productname |
++--------+------------+-------------+
+|      1 | 2023-12-21 | mouse       |
+|      2 | 2023-12-21 | keyboard    |
++--------+------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table bills add productprize int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+
+| billno | billdate   | productname | productprize |
++--------+------------+-------------+--------------+
+|      1 | 2023-12-21 | mouse       |         NULL |
+|      2 | 2023-12-21 | keyboard    |         NULL |
++--------+------------+-------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into bills (productprize) values(20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+
+| billno | billdate   | productname | productprize |
++--------+------------+-------------+--------------+
+|      1 | 2023-12-21 | mouse       |         NULL |
+|      2 | 2023-12-21 | keyboard    |         NULL |
+|      3 | 2023-12-21 | NULL        |           20 |
++--------+------------+-------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into bills (productname,productprize) values (cursor,50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cursor,50)' at line 1
+mysql> insert into bills (productname,productprize) values ('cursor',50);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+
+| billno | billdate   | productname | productprize |
++--------+------------+-------------+--------------+
+|      1 | 2023-12-21 | mouse       |         NULL |
+|      2 | 2023-12-21 | keyboard    |         NULL |
+|      3 | 2023-12-21 | NULL        |           20 |
+|      4 | 2023-12-21 | cursor      |           50 |
++--------+------------+-------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> update bills set billno=1,
+    -> where productprize=59;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where productprize=59' at line 2
+mysql> update bills set productprize=59
+    -> where billno=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+
+| billno | billdate   | productname | productprize |
++--------+------------+-------------+--------------+
+|      1 | 2023-12-21 | mouse       |           59 |
+|      2 | 2023-12-21 | keyboard    |         NULL |
+|      3 | 2023-12-21 | NULL        |           20 |
+|      4 | 2023-12-21 | cursor      |           50 |
++--------+------------+-------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into bills (productname,productprize) values ('hariharan',263);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+
+| billno | billdate   | productname | productprize |
++--------+------------+-------------+--------------+
+|      1 | 2023-12-21 | mouse       |           59 |
+|      2 | 2023-12-21 | keyboard    |         NULL |
+|      3 | 2023-12-21 | NULL        |           20 |
+|      4 | 2023-12-21 | cursor      |           50 |
+|      5 | 2023-12-21 | hariharan   |          263 |
++--------+------------+-------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table bills add billtime default (current_timestrap);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default (current_timestrap)' at line 1
+mysql> alter table billsalter table bills add pro;ductprize
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table bills add pro' at line 1
+    -> alter table bills add billtime time;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ductprize
+alter table bills add billtime time' at line 1
+mysql> alter table bills add int billtime;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int billtime' at line 1
+mysql> alter table bills add  billtime int ;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from paybills;
+ERROR 1146 (42S02): Table 'paybills.paybills' doesn't exist
+mysql> select * from bills;
++--------+------------+-------------+--------------+----------+
+| billno | billdate   | productname | productprize | billtime |
++--------+------------+-------------+--------------+----------+
+|      1 | 2023-12-21 | mouse       |           59 |     NULL |
+|      2 | 2023-12-21 | keyboard    |         NULL |     NULL |
+|      3 | 2023-12-21 | NULL        |           20 |     NULL |
+|      4 | 2023-12-21 | cursor      |           50 |     NULL |
+|      5 | 2023-12-21 | hariharan   |          263 |     NULL |
++--------+------------+-------------+--------------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> alter table bills rename column billtime to billtimes;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table bills modify billtimes varchar(20);
+Query OK, 5 rows affected (0.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+-----------+
+| billno | billdate   | productname | productprize | billtimes |
++--------+------------+-------------+--------------+-----------+
+|      1 | 2023-12-21 | mouse       |           59 | NULL      |
+|      2 | 2023-12-21 | keyboard    |         NULL | NULL      |
+|      3 | 2023-12-21 | NULL        |           20 | NULL      |
+|      4 | 2023-12-21 | cursor      |           50 | NULL      |
+|      5 | 2023-12-21 | hariharan   |          263 | NULL      |
++--------+------------+-------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update bills set billtimes=296
+    -> where billno=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from bills;
++--------+------------+-------------+--------------+-----------+
+| billno | billdate   | productname | productprize | billtimes |
++--------+------------+-------------+--------------+-----------+
+|      1 | 2023-12-21 | mouse       |           59 | 296       |
+|      2 | 2023-12-21 | keyboard    |         NULL | NULL      |
+|      3 | 2023-12-21 | NULL        |           20 | NULL      |
+|      4 | 2023-12-21 | cursor      |           50 | NULL      |
+|      5 | 2023-12-21 | hariharan   |          263 | NULL      |
++--------+------------+-------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> drop table bills;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from bills;
+ERROR 1146 (42S02): Table 'paybills.bills' doesn't exist
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| paybills           |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> drop database paybills;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> create datebase docter;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'datebase docter' at line 1
+mysql> create database docter;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| docter             |
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use docter;
+Database changed
+mysql> create table d_details;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table d_details from docter;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from docter' at line 1
+mysql> create table d_details;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table d_details(
+    -> d_name varchar(20),
+    -> d_age int,
+    -> d_gender char(1) check (d_gender in ('M','F')),
+    -> d_location var char(10) default 'coimbatore'
+    -> 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'var char(10) default 'coimbatore'
+0' at line 5
+mysql> create table d_details(
+    -> d_name varchar(20),
+    -> d_age int,
+    -> d_gender char(1) check (d_gender in ('M','F')),
+    -> d_location default 'coimbatore'
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 'coimbatore'
+)' at line 5
+mysql> create table d_details(
+    -> d_name varchar(20),
+    -> d_age int,
+    -> d_gender char(1) check (d_gender in ('M','F')),
+    -> d_location varchar default 'coimbatore'
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 'coimbatore'
+)' at line 5
+mysql> create table d_details(
+    -> d_name varchar(20),
+    -> d_age int,
+    -> d_gender char(1) check (d_gender in ('M','F')),
+    -> d_location varchar(20) default 'coimbatore'
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from d_details;
+Empty set (0.00 sec)
+
+mysql> insert into d_details values('hariharan',20,'M');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into d_details values('hariharan',20,'M','coim');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from d_details;
++-----------+-------+----------+------------+
+| d_name    | d_age | d_gender | d_location |
++-----------+-------+----------+------------+
+| hariharan |    20 | M        | coim       |
++-----------+-------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into d_details values('hariharan',20,'k','coim');
+ERROR 3819 (HY000): Check constraint 'd_details_chk_1' is violated.
+mysql> insert into d_details  (d_name,d_age,d_gender)values('hariharan',20,'k');
+ERROR 3819 (HY000): Check constraint 'd_details_chk_1' is violated.
+mysql>
