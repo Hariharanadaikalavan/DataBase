@@ -1,0 +1,203 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/):
+
+Current Mongosh Log ID: 6595067ba3a710ad7ec991e1
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.1
+Using MongoDB:          7.0.4
+Using Mongosh:          2.1.1
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2023-12-27T12:50:14.800+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show databases
+admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+test      8.00 KiB
+test> use Assignment1
+switched to db Assignment1
+Assignment1> db.createCollection("student")
+{ ok: 1 }
+Assignment1> show collections
+student
+Assignment1> db.createCollection("Customer")
+{ ok: 1 }
+Assignment1> db.createCollections("Order_details")
+TypeError: db.createCollections is not a function
+Assignment1> db.createCollection("Order_details")
+{ ok: 1 }
+Assignment1> show collections
+Customer
+Order_details
+student
+Assignment1> db.student.insertMany([{Name:"Hariharan",Age:22,Score:96.5},{Name:"Shiva",Age:23,Score:95.36}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('65950763a3a710ad7ec991e2'),
+    '1': ObjectId('65950763a3a710ad7ec991e3')
+  }
+}
+Assignment1> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra ShivaAssignment1> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("2000-11-16"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra ShivaAssignment1> db.order_debt.insertMany([{OrderId:101,Customerid:1,Order_datetime:ISODate("2023-03-10"),ShAssignment1> db.order_debt.insertMany([{OrderId:101,Customerid:1,Order_datetime:ISODate("2023-03-10"),Shipped_datetime:ISODate("2023-03-12"),Total_amount:123.45},{Orderid:102,Customerid:2,Order_datetime:ISODate("2023-04-05"),Shipped_datetime:ISODate("2023-04-12"),Total_Amount:321.54}])
+{   '0': ObjectId('659507a0a3a710ad7ec991e4'),
+  acknowledged: true,9507a0a3a710ad7ec991e5')
+  insertedIds: {
+    '0': ObjectId('659507d6a3a710ad7ec991e6'),
+    '1': ObjectId('659507d6a3a710ad7ec991e7')
+  }
+}
+Assignment1> show collections
+Assignment1> db.getCollectionInfos()
+[To exit, press Ctrl+C again or Ctrl+D or type .exit)
+  {er_debt   108.00 KiB
+    name: 'student',KiB
+    type: 'collection',
+    options: {}, customer
+    info: { db customer
+      readOnly: false,ions
+      uuid: UUID('13d7b960-833a-4f0c-9256-f168e73b723c')
+    },ment> db.dropDatabases()
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  },gnment> db.dropDatabase()
+  {k: 1, dropped: 'assignment' }
+    name: 'Order_details',
+    type: 'collection',
+    options: {},ctions
+    info: {
+      readOnly: false,
+      uuid: UUID('3e6ab0df-8031-4d9f-86f8-31e7757b7c8e')
+    },        40.00 KiB
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  },l         40.00 KiB
+  {t           8.00 KiB
+    name: 'Customer',ctionsInfo()
+    type: 'collection',ectionsInfo is not defined
+    options: {},getCollectionsInfo()
+    info: {db.getCollectionsInfo is not a function
+      readOnly: false,lectionsInfo()
+      uuid: UUID('45c48e98-70d4-4c6f-ae51-c0b540544204')
+    },ment1> db.getCollectionsInfos()
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  },gnment1>
+  {
+    name: 'order_debt',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: UUID('75e1a1a8-d041-4cf0-b086-c91d4b4fdd0b')
+    },
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  },
+  {
+    name: 'customer',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: UUID('c80cf365-67b8-4cdc-bf89-55b335d97e47')
+    },
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  }
+]
+Assignment1> db.getCollectionInfos().pretty()
+TypeError: db.getCollectionInfos().pretty is not a function
+Assignment1> db.student.find([{},{_id=0}])
+...
+...
+... ;
+Uncaught:
+SyntaxError: Invalid shorthand property initializer. (1:24)
+
+> 1 | db.student.find([{},{_id=0}])
+    |                         ^
+  2 |
+  3 |
+  4 | ;
+
+Assignment1> db.student.find({},{_id:0}) ;
+[
+  { Name: 'Hariharan', Age: 22, Score: 96.5 },
+  { Name: 'Shiva', Age: 23, Score: 95.36 }
+]
+Assignment1> db.customer.find()
+[
+  {
+    _id: ObjectId('659507a0a3a710ad7ec991e4'),
+    Customerid: 1,
+    FirstName: 'Hariharan',
+    LastName: 'A',
+    DOb: ISODate('2000-11-16T00:00:00.000Z'),
+    Address: '203,SaranyaIllam,Coimbatore',
+    PhoneNumber: 9894470748
+  },
+  {
+    _id: ObjectId('659507a0a3a710ad7ec991e5'),
+    FirstName: 'Narendra Shiva',
+    LastName: 'M',
+    Dob: ISODate('2000-03-13T00:00:00.000Z'),
+    Address: 'No.8,Kaniyakumari',
+    Phone: 7010105634
+  }
+]
+Assignment1> db.customer.find({},{_id:0})
+[
+  {
+    Customerid: 1,
+    FirstName: 'Hariharan',
+    LastName: 'A',
+    DOb: ISODate('2000-11-16T00:00:00.000Z'),
+    Address: '203,SaranyaIllam,Coimbatore',
+    PhoneNumber: 9894470748
+  },
+  {
+    FirstName: 'Narendra Shiva',
+    LastName: 'M',
+    Dob: ISODate('2000-03-13T00:00:00.000Z'),
+    Address: 'No.8,Kaniyakumari',
+    Phone: 7010105634
+  }
+]
+Assignment1> show collections
+customer
+Customer
+order_debt
+Order_details
+student
+Assignment1> db.Customer.find()
+
+Assignment1> db.Customer.find()
+true
+Assignment1> show collections
+customer
+order_debt
+Order_details
+student
+Assignment1> db.order_debt.find()
+[
+  {
+    _id: ObjectId('659507d6a3a710ad7ec991e6'),
+    OrderId: 101,
+    Customerid: 1,
+    Order_datetime: ISODate('2023-03-10T00:00:00.000Z'),
+    Shipped_datetime: ISODate('2023-03-12T00:00:00.000Z'),
+    Total_amount: 123.45
+  },
+  {
+    _id: ObjectId('659507d6a3a710ad7ec991e7'),
+    Orderid: 102,
+    Customerid: 2,
+    Order_datetime: ISODate('2023-04-05T00:00:00.000Z'),
+    Shipped_datetime: ISODate('2023-04-12T00:00:00.000Z'),
+    Total_Amount: 321.54
+  }
+]
+Assignment1> db.Order_details.find()
+
+Assignment1>
+customer
+order_debt
+student
