@@ -1,0 +1,132 @@
+test> db.createCollection("student")
+{ ok: 1 }
+test> show databases
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+test     8.00 KiB
+test> show collection
+MongoshInvalidInputError: [COMMON-10001] 'collection' is not a valid argument for "show".
+test> db.getCollectionInfos()
+[
+  {
+    name: 'student',
+    type: 'collection',
+    options: {},
+    info: {
+      readOnly: false,
+      uuid: UUID('c8bf2a45-b739-4ddf-bde5-88cb74c328d0')
+    },
+    idIndex: { v: 2, key: { _id: 1 }, name: '_id_' }
+  }
+]
+test> use student
+switched to db student
+student> db.student.insertMany([])
+MongoInvalidArgumentError: Invalid BulkOperation, Batch cannot be empty
+student> db.student.insertMany([{Name:"Hariharan",Age:22,Score:96.5},{Name:"Shiva",Age:23,Score:95.36}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6594fc1be1e7bbdaf85f6bae'),
+    '1': ObjectId('6594fc1be1e7bbdaf85f6baf')
+  }
+}
+student> db.student.find()
+[
+  {
+    _id: ObjectId('6594fc1be1e7bbdaf85f6bae'),
+    Name: 'Hariharan',
+    Age: 22,
+    Score: 96.5
+  },
+  {
+    _id: ObjectId('6594fc1be1e7bbdaf85f6baf'),
+    Name: 'Shiva',
+    Age: 23,
+    Score: 95.36
+  }
+]
+student> db.createCollection("customer")
+{ ok: 1 }
+customer> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("13-03-2000"),Address:"No.8,Kaniyakumari","Phone":7010105634}])
+MongoshInvalidInputError: [COMMON-10001] "16-11-2000" is not a valid ISODate
+customer> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("2000-03-13")
+...
+... ;
+Uncaught:
+SyntaxError: Unexpected token, expected "," (3:0)
+
+  1 | db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("2000-03-13")
+  2 |
+> 3 | ;
+    | ^
+  4 |
+
+customer> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("2000-03-13"),A;
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:239)
+
+> 1 | db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("16-11-2000"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("2000-03-13"),A;
+    |                                                                                                                                                                                                                                                ^
+  2 |
+
+customer> db.customer.insertMany([{Customerid:1,"FirstName":"Hariharan","LastName":"A",DOb:ISODate("2000-11-16"),Address:"203,SaranyaIllam,Coimbatore","PhoneNumber":9894470748},{"FirstName":"Narendra Shiva","LastName":"M",Dob:ISODate("2000-03-13"),Address:"No.8,Kaniyakumari","Phone":7010105634}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6594ff52e1e7bbdaf85f6bb0'),
+    '1': ObjectId('6594ff52e1e7bbdaf85f6bb1')
+  }
+}
+customer> db.find().pretty()
+TypeError: db.find is not a function
+customer> db.customer.find().pretty()
+[
+  {
+    _id: ObjectId('6594ff52e1e7bbdaf85f6bb0'),
+    Customerid: 1,
+    FirstName: 'Hariharan',
+    LastName: 'A',
+    DOb: ISODate('2000-11-16T00:00:00.000Z'),
+    Address: '203,SaranyaIllam,Coimbatore',
+    PhoneNumber: 9894470748
+  },
+  {
+    _id: ObjectId('6594ff52e1e7bbdaf85f6bb1'),
+    FirstName: 'Narendra Shiva',
+    LastName: 'M',
+    Dob: ISODate('2000-03-13T00:00:00.000Z'),
+    Address: 'No.8,Kaniyakumari',
+    Phone: 7010105634
+  }
+]
+customer> db.createCollection("Order_Det")
+{ ok: 1 }
+customer> use Order_debt
+switched to db Order_debt
+Order_debt> db.order_debt.insertMany([{OrderId:101,Customerid:1,Order_datetime:ISODate("2023-03-10"),Shipped_datetime:ISODate("2023-03-12"),Total_amount:123.45},{Orderid:102,Customerid:2,Order_datetime:ISODate("2023-04-05"),Shipped_datetime:ISODate("23-04-12"),Total_Amount:321.54}])
+MongoshInvalidInputError: [COMMON-10001] "23-04-12" is not a valid ISODate
+Order_debt> db.order_debt.insertMany([{OrderId:101,Customerid:1,Order_datetime:ISODate("2023-03-10"),Shipped_datetime:ISODate("2023-03-12"),Total_amount:123.45},{Orderid:102,Customerid:2,Order_datetime:ISODate("2023-04-05"),Shipped_datetime:ISODate("23-04-1"),Total_Amount:321.54}])
+MongoshInvalidInputError: [COMMON-10001] "23-04-1" is not a valid ISODate
+Order_debt> db.order_debt.insertMany([{OrderId:101,Customerid:1,Order_datetime:ISODate("2023-03-10"),Shipped_datetime:ISODate("2023-03-12"),Total_amount:123.45},{Orderid:102,Customerid:2,Order_datetime:ISODate("2023-04-05"),Shipped_datetime:ISODate("2023-04-12"),Total_Amount:321.54}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('65950185e1e7bbdaf85f6bb2'),
+    '1': ObjectId('65950185e1e7bbdaf85f6bb3')
+  }
+}
+Order_debt> show collection
+MongoshInvalidInputError: [COMMON-10001] 'collection' is not a valid argument for "show".
+Order_debt> show collections
+order_debt
+Order_debt> show databases;
+Order_debt   40.00 KiB
+admin        40.00 KiB
+config      108.00 KiB
+customer     48.00 KiB
+local        40.00 KiB
+student      48.00 KiB
+test          8.00 KiB
+Order_debt>
