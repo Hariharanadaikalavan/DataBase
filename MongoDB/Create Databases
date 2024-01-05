@@ -11,7 +11,7 @@ test> db.getCollectionInfos()
 [
   {
     name: 'student',
-    type: 'collection',
+    type: 'collection', 
     options: {},
     info: {
       readOnly: false,
