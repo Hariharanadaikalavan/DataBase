@@ -1,0 +1,193 @@
+Microsoft Windows [Version 10.0.19043.2130]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Hariharan>mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| docter             |
+| employees_details  |
+| hariharan          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+10 rows in set (0.02 sec)
+
+mysql> use hariharan
+Database changed
+mysql> show tables
+    -> ;
++---------------------+
+| Tables_in_hariharan |
++---------------------+
+| marks               |
+| student_profile     |
++---------------------+
+2 rows in set (0.02 sec)
+
+mysql> select * from marks
+    -> ;
+Empty set (0.02 sec)
+
+mysql> select * from student_profile;
+Empty set (0.00 sec)
+
+mysql> drop table marks
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_hariharan |
++---------------------+
+| student_profile     |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> drop table student_proile
+    -> ;
+ERROR 1051 (42S02): Unknown table 'hariharan.student_proile'
+mysql> drop table student_profile;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables
+    -> ;
+Empty set (0.00 sec)
+
+mysql> drop database hariharan
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| docter             |
+| employees_details  |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> use doctor
+ERROR 1049 (42000): Unknown database 'doctor'
+mysql> use database doctor
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use docter
+Database changed
+mysql> show tables
+    -> ;
++------------------+
+| Tables_in_docter |
++------------------+
+| d_details        |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from d_details
+    -> ;
++------+-----------+-------+----------+------------+
+| s_no | d_name    | d_age | d_gender | d_location |
++------+-----------+-------+----------+------------+
+| NULL | hariharan |    20 | M        | coim       |
++------+-----------+-------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> drop table d_details
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables
+    -> ;
+Empty set (0.00 sec)
+
+mysql> drop database docter;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| employees_details  |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
+| your_database_name |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use employees_details
+Database changed
+mysql> show tables;
++-----------------------------+
+| Tables_in_employees_details |
++-----------------------------+
+| dept                        |
+| emp                         |
++-----------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+----------+
+| deptno | dname      | loc      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> ;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql>
