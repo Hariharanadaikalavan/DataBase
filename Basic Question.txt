@@ -7,7 +7,7 @@ CREATE TABLE student_profile (
     city VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE marks (
+CREATE TABLE marks ( 
     rollno INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     mark1 INT NOT NULL,
