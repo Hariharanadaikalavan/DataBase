@@ -1,0 +1,76 @@
+select name from sys.databases
+create database secondlargestemp
+use secondlargestemp
+Create table tbl_Employees  
+(  
+     Id int primary key not null identity(1,1),  
+     FirstName varchar(50),  
+     LastName varchar(20),  
+     Location varchar(20),  
+     Gender varchar(50),  
+     Salary int  ,
+	 Experience dec(5,1)
+)  
+Insert into tbl_Employees values ('Chittaranjan', 'Swain','Odisha', 'Male', 80000,2.1)  
+Insert into tbl_Employees values ('Chandin', 'Swain', 'Pune','Female', 76000,10.5)  
+Insert into tbl_Employees values ('Mitu', 'Pradhan','Delhi', 'Male', 55000,2.6)  
+Insert into tbl_Employees values ('Jeni', 'Swain','Chennai', 'Female', 76000,9.6)  
+Insert into tbl_Employees values ('Adyashree', 'Swain','UK', 'Female', 49000,6.8)  
+Insert into tbl_Employees values ('Ram', 'Kumar','US', 'Male', 39000,5.3)  
+Insert into tbl_Employees values ('Jitendra', 'Gouad','Hydrabad', 'Male', 35000,23.3)  
+Insert into tbl_Employees values ('Dibas', 'Hembram','Bangalore', 'Male', 55000,63.5)
+Insert into tbl_Employees values ('zywdf', 'Hembram','coimbatore', 'Male', 55060,98.5)
+Insert into tbl_Employees values ('asdfg', 'Hembram','coimbatore', 'Male', 55065,88.5)
+
+
+select top 2 * from tbl_Employees
+
+select * from tbl_Employees
+order by Salary
+offset 2 rows
+fetch next 1 rows only
+
+create table employee_audit(
+id int,
+Inserted_by varchar(25)
+)
+alter table employee_audit
+ column id varchar(20)
+
+
+alter table employee_audit
+add  operation varchar(20) default 'something done'
+
+drop trigger trg_insert
+Create trigger trg_insert on tbl_employees
+for insert 
+as begin
+  declare @ID varchar(20) 
+  select @ID=FirstName from inserted
+  insert into employee_audit(id,Inserted_by,operation) values(@ID,ORIGINAL_LOGIN(),'inserted')
+  print 'inserted trigger exected'
+  end 
+
+  Insert into tbl_Employees values ('A', 'B', 'C','Female', 76000,10.5)  
+
+  select * from tbl_employees
+  select * from employee_audit
+
+  truncate table employee_audit;
+
+  drop trigger trg_delete
+  create trigger trg_delete on tbl_employees
+  for insert
+  as begin 
+    declare @ID int 
+	declare @opration varchar(20)
+	select @ID=id from inserted
+	
+	insert into employee_audit(id,Inserted_by,operation) values(@ID,ORIGINAL_LOGIN(),'deleted')
+	print 'Delete trigger executed successfully'
+	end
+
+	delete from tbl_Employees
+	where id=10
+	select * from tbl_employees
+  select * from employee_audit
