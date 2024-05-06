@@ -1,0 +1,85 @@
+select name from sys.databases;
+
+CREATE DATABASE employee_details;
+
+USE employee_details;
+
+CREATE TABLE emp (
+
+    id INT IDENTITY PRIMARY KEY,
+    firstname VARCHAR(20) NOT NULL,
+    gender CHAR(1) NOT NULL,
+    nationality VARCHAR(20) DEFAULT 'indian',
+    phonenumber BIGINT UNIQUE,
+    deptno INT
+);
+
+CREATE TABLE dept (
+    deptno INT PRIMARY KEY,
+    addresss VARCHAR(255) NOT NULL,
+    pincode INT UNIQUE
+);
+
+-- Add a foreign key constraint in the emp table to reference the deptno in the dept table
+ALTER TABLE emp
+ADD CONSTRAINT fk_deptno FOREIGN KEY (deptno) REFERENCES dept(deptno);
+
+-- Insert a record into the dept table
+INSERT INTO dept (deptno, addresss, pincode) VALUES (1, 'no.5 vivek nagar Dubai main Road', 641025);
+
+INSERT INTO dept (deptno, addresss, pincode) VALUES (2, 'no.5 vivek nagar russia main Road', 641024);
+
+INSERT INTO dept (deptno, addresss, pincode) VALUES (3, 'no.5 vivek nagar america main Road', 641026);
+
+
+-- Insert a record into the emp table, without specifying the id since it's auto-incremented
+INSERT INTO emp (firstname, gender, nationality, phonenumber, deptno) VALUES ('hariharan', 'm', 'bharat', 9894470748, 1);
+INSERT INTO emp (firstname, gender, phonenumber, deptno) VALUES ('hariharan', 'm', 9894470788, 1);
+INSERT INTO emp (firstname, gender, nationality, phonenumber) VALUES ('hariharan', 'm', 'bharat', 9864650748);
+
+
+-- View the contents of the emp and dept tables
+SELECT * FROM emp;
+SELECT * FROM dept;
+
+select emp.deptno,emp.firstname,emp.gender,emp.id,emp.nationality,dept.addresss,dept.pincode from emp
+left join dept 
+on emp.deptno=dept.deptno;
+
+drop database employee_details;
+
+select name from sys.databases
+use training;
+select * from employee
+create view good_view as 
+select  top 3 * from employee
+
+select * from good_view
+
+select * from employee
+update  employee
+set empname='hariharan'
+where empid=102
+
+create procedure procede @emp int as
+begin
+select * from employee where empid=@emp
+end
+
+exec procede @emp=101
+
+drop trigger trg_update 
+create trigger trg_update on employee
+for update 
+as begin
+Declare @ID int
+select @ID=empid from inserted
+insert into employee_audit (id,operation_by,operation) values(@ID,ORIGINAL_LOGIN(),'updated')
+end
+
+create table employee_audit(
+id int,
+operation_by varchar(20),
+operation varchar(20))
+
+select * from employee_audit
