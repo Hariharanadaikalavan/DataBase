@@ -1,0 +1,172 @@
+create database training
+
+																														select name from sys.databases
+
+use training
+
+create table employee(
+empid int primary key,
+empname varchar(100),
+department varchar(50),
+contactno bigint, 
+emaildid varchar(100), 
+empheadid int)
+
+ALTER TABLE employee
+ADD CONSTRAINT uni_cont 
+UNIQUE (contactno);
+
+alter table employee
+add constraint def_dept
+default 'Not Register'  for department
+
+exec sp_rename 'employee.emaildid' , 'emailid', 'column' 
+
+INSERT INTO employee (empid, empname, department, contactno, emailid, empheadid)
+VALUES (101, 'Isha', 'E-101', 9894470748, 'isha@gmail.com', 105);
+
+INSERT INTO employee (empid, empname, department, contactno, emailid, empheadid)
+VALUES (102, 'Priya', 'E-104', 7010105634, 'priya@yahoo.com', 103);
+
+INSERT INTO employee (empid, empname, department, contactno, emailid, empheadid)
+VALUES (103, 'Neha', 'E-101', 9489394861, 'neha@gmail.com', 101);
+
+INSERT INTO employee (empid, empname, department, contactno, emailid, empheadid)
+VALUES (104, 'Rahul', 'E-102', 9787831191, 'rahul@yahoo.com', 105);
+
+INSERT INTO employee (empid, empname, department, contactno, emailid, empheadid)
+VALUES (105, 'Abhishek', 'E-101', 8778323369, 'abhishek@gmail.com', 102);
+
+																															select * from employee
+
+select TABLE_NAME from INFORMATION_SCHEMA.tables
+where table_type='base table'
+
+select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,COLUMN_DEFAULT from INFORMATION_SCHEMA.COLUMNS
+
+
+create table empdept(deptid varchar(50) primary key,
+deptname varchar(100), 
+dept_off varchar(100), 
+depthead int foreign key references employee(empid))
+
+select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,COLUMN_DEFAULT from INFORMATION_SCHEMA.COLUMNS
+where table_name='empdept'
+
+INSERT INTO empdept (deptid, deptname, dept_off, depthead)
+VALUES ('E-101', 'HR', 'Monday', 105);
+
+INSERT INTO empdept (deptid, deptname, dept_off, depthead)
+VALUES ('E-102', 'Development', 'Tuesday', 101);
+
+INSERT INTO empdept (deptid, deptname, dept_off, depthead)
+VALUES ('E-103', 'Hous Keeping', 'Saturday', 103);
+
+INSERT INTO empdept (deptid, deptname, dept_off, depthead)
+VALUES ('E-104', 'Sales', 'Sunday', 104);
+
+INSERT INTO empdept (deptid, deptname, dept_off, depthead)
+VALUES ('E-105', 'Purchage', 'Tuesday', 104);
+
+																															select * from empdept
+
+create table empsalary(
+empid int foreign key references employee(empid), 
+salary bigint, 
+ispermanent varchar(3))
+
+select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,COLUMN_DEFAULT from INFORMATION_SCHEMA.COLUMNS
+where table_name='empsalary'
+
+INSERT INTO EmpSalary (EmpId, Salary, IsPermanent)
+VALUES (101, 2000, 'Yes');
+
+INSERT INTO EmpSalary (EmpId, Salary, IsPermanent)
+VALUES (102, 10000, 'Yes');
+
+INSERT INTO EmpSalary (EmpId, Salary, IsPermanent)
+VALUES (103, 5000, 'No');
+
+INSERT INTO EmpSalary (EmpId, Salary, IsPermanent)
+VALUES (104, 1900, 'Yes');
+
+INSERT INTO EmpSalary (EmpId, Salary, IsPermanent)
+VALUES (105, 2300, 'Yes');
+
+																															select * from empsalary
+
+create table project(projectid varchar(50) primary key, duration int)
+
+INSERT INTO Project (ProjectId, Duration)
+VALUES ('p-1   ', 23);
+
+INSERT INTO Project (ProjectId, Duration)
+VALUES ('p-2   ', 15);
+
+INSERT INTO Project (ProjectId, Duration)
+VALUES ('p-3   ', 45);
+
+INSERT INTO Project (ProjectId, Duration)
+VALUES ('p-4   ', 2);
+
+																													select * from project
+
+create table country(cid varchar(50) primary key, cname varchar(100))
+INSERT INTO Country (cid, cname)
+VALUES ('c-1', 'India');
+
+INSERT INTO Country (cid, cname)
+VALUES ('c-2', 'USA');
+
+INSERT INTO Country (cid, cname)
+VALUES ('c-3', 'China');
+
+INSERT INTO Country (cid, cname)
+VALUES ('c-4', 'Pakistan');
+
+INSERT INTO Country (cid, cname)
+VALUES ('c-5', 'Russia');
+
+																												select * from country
+
+create table clienttable(clientid varchar(50) primary key, clientname varchar(100), cid varchar(50) references country(cid))
+
+INSERT INTO ClientTable (ClientId, ClientName, cid)
+VALUES ('cl-1', 'ABC Group', 'c-1');
+
+INSERT INTO ClientTable (ClientId, ClientName, cid)
+VALUES ('cl-2', 'PQR', 'c-1');
+
+INSERT INTO ClientTable (ClientId, ClientName, cid)
+VALUES ('cl-3', 'XYZ', 'c-2');
+
+INSERT INTO ClientTable (ClientId, ClientName, cid)
+VALUES ('cl-4', 'tech altum', 'c-3');
+
+INSERT INTO ClientTable (ClientId, ClientName, cid)
+VALUES ('cl-5', 'mnp', 'c-5');
+
+																											select * from clienttable
+
+create table empproject(empid int foreign key references employee(empid), 
+projectid varchar(50) foreign key references project(projectid), 
+clientid varchar(50) foreign key references clienttable(clientid),
+startyear int, 
+endyear int)
+
+INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+VALUES (101, 'p-1', 'cl-1', 2010, 2010);
+
+INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+VALUES (102, 'p-2', 'cl-2', 2010, 2012);
+
+INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+VALUES (103, 'p-1', 'cl-3', 2013, NULL);
+
+INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+VALUES (104, 'p-4', 'cl-1', 2014, 2015);
+
+INSERT INTO EmpProject (EmpId, ProjectId, ClientID, StartYear, EndYear)
+VALUES (105, 'p-5', 'cl-5', 2015, NULL);
+		
+																										select * from empproject
