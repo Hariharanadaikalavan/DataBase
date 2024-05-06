@@ -1,0 +1,59 @@
+    use training
+
+
+	select TABLE_NAME from INFORMATION_SCHEMA.tables
+    where table_type='base table'
+	
+	
+	select * from employee
+
+    select * from empdept
+
+	select * from empsalary
+
+	select * from project
+
+	select * from country
+
+    select * from clienttable
+
+	select * from empproject
+
+  SELECT *FROM (SELECT TOP 5 *FROM empdept
+  ORDER BY Dept_Off
+  ) AS subquery 
+  ORDER BY Dept_Off
+  OFFSET 2 ROWS;
+	 
+
+
+alter procedure three(@name int,@emp int) as
+begin 
+select * from employee where empid between @name and  @emp
+end
+
+select * from employee
+exec three @name=102, @emp=104
+
+SELECT * FROM sys.sql_modules
+
+select e.empid,e.empname,e.department,d.deptid,d.deptname,s.salary,s.ispermanent from employee e
+ join empdept d on e.department=d.deptid
+ join salary s on e.empid=s.empid
+
+ SELECT e.empid, e.empname, e.department, d.deptid, d.deptname, s.salary, s.ispermanent
+FROM employee e
+JOIN empdept d ON e.department = d.deptid
+JOIN empsalary s ON d.depthead = s.empid
+order by salary desc 
+
+
+create procedure counting @ting int as
+begin
+select department from employee
+group by department
+having COUNT(department)=@ting
+end
+
+exec counting @ting=3
+
